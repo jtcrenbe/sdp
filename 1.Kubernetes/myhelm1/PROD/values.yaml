@@ -1,0 +1,87 @@
+# Default values for myhelm1.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  registry: registry.prod.test
+  repository: sadapay/myhelm1
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1.0.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {
+    kubernetes.io/ingress.class: nginx-dev
+  }
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: myhelm1.prod.sadapay.test
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+encryptedData:
+  BEARER_TOKEN: CgBmAu/6JjoqRnYMIYLjIGm74H0+kWrdY7Ag20dckkJ+SiQUW+X2CYDBeSrEG2hgQhCwOxhWmEaK4HNnES6Vr1UzXQ4vmuVrVw4W+dHceOykXbYNZuzV4R1kcFKiecJISpLKsfgbdQeekEOT3X1MfbNMRm8HFr75dWimNL4Q0dTGePBC+A61ltBd4eWlzMoGh+QZ34d2Uuac5x+uh4wQIHnkkDT5inXBiyEe4b1ZDTELAbJF+r4mYX1yPYu6iWNcYqe3ASCOk5L2b86hV3NkgEGFGm76IpKQNkkU2+5tovH5Um9ecUNzZfm0q5ZP4/CWIyVmbn91eOEUcE6z/r43DoaiEmxQbZPIvHiJ8VG2ngsN68d6meiIL5aMRWvcBoiq+fwzp6YENceuksi/3npevzOCTfqMDmTs/o97Mz10Tt3ohU2jAwc9p2pAlAoeUvFZ12uxRYUqQd2MiOlH3iipYMpPT8eMFF5i3fWHaWr68GG0Tvk4H3ppBEAI/VLT+FDhup2ZMP7sBl+uM7pQx43D0FPYDilWMsuRtj3d8UeLZS+AIa36ODtSA5lvFuuGkfn36RdqD+8dPPPugKWFfg92MPzFQysxCJUnFGW91lMo4f8pQQHwjD6/ZFfm4p4kE+GZ7zdHtez/7PXBi/uO2bTTeD20OG4Ce24eZu1YjY1YgDHJraPL5vM1owUmzVyIQlmKT9znXMYflCp6Ere62GwEPy+g7y0a0G==
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
